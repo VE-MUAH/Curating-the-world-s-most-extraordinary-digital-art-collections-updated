@@ -1,0 +1,126 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+<div class="hero-section">
+  <div class="container">
+    <h1 class="hero-title">Curating the Extraordinary</h1>
+    <p class="hero-subtitle">Discover exclusive collections from around the world.</p>
+
+    <form action="" method="get" class="hero-search-form">
+      <input type="text" name="q" class="hero-search-input" placeholder="Search collections, artists, or styles..."
+        value="{{ request.GET.q|default:'' }}">
+      <button type="submit" class="hero-search-btn">Search</button>
+    </form>
+  </div>
+</div>
+
+<div class="container mb-5">
+  <div class="row">
+    {% for collection in all_collection %}
+    <div class="col-md-4 mb-4">
+      <div class="card collection-card">
+        <img class="card-img-top" src="{{collection.collcover}}" alt="{{collection.collection_name}}">
+        <div class="card-body text-center">
+          <h5 class="card-title">
+            <a href="{% url 'details' collection.id %}">{{collection.collection_name}}</a>
+          </h5>
+          <p class="card-text text-muted">{{collection.description|truncatechars:100}}</p>
+          <a href="{% url 'details' collection.id %}" class="btn btn-premium mt-2">View Collection</a>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <div class="col-12 text-center mt-5">
+      <h3>No collections found matching "{{ request.GET.q }}"</h3>
+      <a href="{% url 'index' %}" class="btn btn-outline-dark mt-3">View All Collections</a>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- Live Stats Section -->
+<div class="stats-section py-5 bg-dark text-white text-center">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <h2 class="display-4 font-weight-bold">1,200+</h2>
+        <p>Students Curating</p>
+      </div>
+      <div class="col-md-4">
+        <h2 class="display-4 font-weight-bold">{{ all_collection.count }}</h2>
+        <p>Exclusive Collections</p>
+      </div>
+      <div class="col-md-4">
+        <h2 class="display-4 font-weight-bold">50+</h2>
+        <p>Expert Curators</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Student Voices (Testimonials) -->
+<div class="testimonials-section py-5 bg-light">
+  <div class="container">
+    <h2 class="text-center mb-5 hero-title" style="color: var(--primary-color);">Student Voices</h2>
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <div class="card border-0 shadow-sm p-3">
+          <div class="card-body">
+            <p class="font-italic">"This platform changed how I see art. The collections are breathtaking!"</p>
+            <footer class="blockquote-footer">Sarah J., Art History Student</footer>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="card border-0 shadow-sm p-3">
+          <div class="card-body">
+            <p class="font-italic">"Vicentia is my go-to for finding inspiration for my own work."</p>
+            <footer class="blockquote-footer">Mike T., Fine Arts Major</footer>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="card border-0 shadow-sm p-3">
+          <div class="card-body">
+            <p class="font-italic">"A truly premium experience. I love curating my own digital gallery here."</p>
+            <footer class="blockquote-footer">Elena R., Design Student</footer>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Meet the Creator -->
+<div class="team-section py-5">
+  <div class="container">
+    <h2 class="text-center mb-5 hero-title">Meet the Creator</h2>
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card border-0 shadow-lg mb-3">
+          <div class="row no-gutters align-items-center">
+            <div class="col-md-4 text-center p-4">
+              <div class="rounded-circle bg-dark text-white d-flex align-items-center justify-content-center mx-auto"
+                style="width: 150px; height: 150px; font-size: 3rem; font-family: 'Playfair Display', serif;">
+                V
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h3 class="card-title font-weight-bold" style="color: var(--primary-color);">Vicentia</h3>
+                <h5 class="text-muted mb-3">Final Year Geomatic Engineering Student, KNUST</h5>
+                <p class="card-text">
+                  "I am passionate about technology and geospatial innovations.
+                  This is my first web application, built to curate extraordinary digital art collections.
+                  I love blending engineering precision with artistic beauty."
+                </p>
+                <p class="card-text"><small class="text-muted">Passionate about Tech & Flexing Code 💪</small></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

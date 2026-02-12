@@ -1,0 +1,211 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+<div class="dashboard-container">
+    <!-- Dashboard Header -->
+    <div class="dashboard-header text-center py-5"
+        style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);">
+        <div class="container">
+            <h1 class="text-white mb-2" style="font-weight: 300;">📊 Admin Dashboard</h1>
+            <p class="text-white-50">Analytics & Insights for Vicentia Gallery</p>
+        </div>
+    </div>
+
+    <div class="container py-5">
+        <!-- Stat Cards Row -->
+        <div class="row mb-5">
+            <div class="col-md-4 mb-4">
+                <div class="stat-card card h-100 text-center"
+                    style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; border-radius: 15px;">
+                    <div class="card-body py-4">
+                        <i class="fas fa-layer-group fa-3x text-white mb-3" style="opacity: 0.8;"></i>
+                        <h2 class="text-white display-4 font-weight-bold">{{ total_collections }}</h2>
+                        <p class="text-white-50 text-uppercase mb-0" style="letter-spacing: 2px;">Collections</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="stat-card card h-100 text-center"
+                    style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border: none; border-radius: 15px;">
+                    <div class="card-body py-4">
+                        <i class="fas fa-palette fa-3x text-white mb-3" style="opacity: 0.8;"></i>
+                        <h2 class="text-white display-4 font-weight-bold">{{ total_pieces }}</h2>
+                        <p class="text-white-50 text-uppercase mb-0" style="letter-spacing: 2px;">Art Pieces</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="stat-card card h-100 text-center"
+                    style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); border: none; border-radius: 15px;">
+                    <div class="card-body py-4">
+                        <i class="fas fa-users fa-3x text-white mb-3" style="opacity: 0.8;"></i>
+                        <h2 class="text-white display-4 font-weight-bold">{{ total_artists }}</h2>
+                        <p class="text-white-50 text-uppercase mb-0" style="letter-spacing: 2px;">Artists</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="row mb-5">
+            <div class="col-lg-6 mb-4">
+                <div class="card chart-card"
+                    style="border: none; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.1);">
+                    <div class="card-header bg-white border-0 pt-4 px-4">
+                        <h5 class="mb-0" style="color: #1a1a2e;"><i class="fas fa-chart-pie mr-2"
+                                style="color: #6c63ff;"></i>Pieces by Collection</h5>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="collectionPieChart" style="max-height: 300px;"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="card chart-card"
+                    style="border: none; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.1);">
+                    <div class="card-header bg-white border-0 pt-4 px-4">
+                        <h5 class="mb-0" style="color: #1a1a2e;"><i class="fas fa-chart-bar mr-2"
+                                style="color: #6c63ff;"></i>Pieces by Year</h5>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="yearBarChart" style="max-height: 300px;"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Top Artists Section -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card" style="border: none; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.1);">
+                    <div class="card-header bg-white border-0 pt-4 px-4">
+                        <h5 class="mb-0" style="color: #1a1a2e;"><i class="fas fa-trophy mr-2"
+                                style="color: #f5576c;"></i>Top Artists</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead style="background: #f8f9fa;">
+                                    <tr>
+                                        <th style="border: none;">#</th>
+                                        <th style="border: none;">Artist Name</th>
+                                        <th style="border: none;">Pieces</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for artist in top_artists %}
+                                    <tr>
+                                        <td><span class="badge"
+                                                style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">{{
+                                                forloop.counter }}</span></td>
+                                        <td><strong>{{ artist.artist }}</strong></td>
+                                        <td><span class="badge badge-pill"
+                                                style="background: #e8f5e9; color: #2e7d32;">{{ artist.count }}
+                                                pieces</span></td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr>
+                                        <td colspan="3" class="text-center text-muted">No artists found</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-5">
+            <a href="{% url 'index' %}" class="btn btn-outline-dark btn-lg">← Back to Gallery</a>
+        </div>
+    </div>
+</div>
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+<script>
+    // Parse data from Django context
+    const collectionLabels = {{ collection_labels| safe }};
+    const collectionCounts = {{ collection_counts| safe }};
+    const yearLabels = {{ year_labels| safe }};
+    const yearCounts = {{ year_counts| safe }};
+
+    // Vibrant color palette
+    const colors = [
+        '#667eea', '#764ba2', '#f093fb', '#f5576c',
+        '#4facfe', '#00f2fe', '#43e97b', '#38f9d7',
+        '#fa709a', '#fee140', '#a8edea', '#fed6e3'
+    ];
+
+    // Pie Chart - Pieces by Collection
+    new Chart(document.getElementById('collectionPieChart'), {
+        type: 'doughnut',
+        data: {
+            labels: collectionLabels,
+            datasets: [{
+                data: collectionCounts,
+                backgroundColor: colors.slice(0, collectionLabels.length),
+                borderWidth: 0,
+                hoverOffset: 10
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        padding: 20,
+                        usePointStyle: true
+                    }
+                }
+            }
+        }
+    });
+
+    // Bar Chart - Pieces by Year
+    new Chart(document.getElementById('yearBarChart'), {
+        type: 'bar',
+        data: {
+            labels: yearLabels,
+            datasets: [{
+                label: 'Pieces',
+                data: yearCounts,
+                backgroundColor: 'rgba(102, 126, 234, 0.8)',
+                borderColor: '#667eea',
+                borderWidth: 2,
+                borderRadius: 8,
+                borderSkipped: false
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1
+                    },
+                    grid: {
+                        color: 'rgba(0,0,0,0.05)'
+                    }
+                },
+                x: {
+                    grid: {
+                        display: false
+                    }
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}
