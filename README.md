@@ -13,7 +13,7 @@ This is my first web application, built as a final-year Geomatic Engineering stu
 - 👥 **User Dashboard**: Personal gallery management
 
 ## Tech Stack
-- **Backend**: Django 5.2.10
+- **Backend**: Django 5.2.11
 - **Frontend**: HTML, CSS (Custom), Bootstrap 4
 - **Database**: postgresql
 - **Fonts**: Google Fonts (Playfair Display, Inter)
@@ -54,4 +54,5 @@ python manage.py runserver
 
 ---
 © 2026 Vicentia Gallery. All rights reserved.
+
 
