@@ -15,7 +15,7 @@ This is my first web application, built as a final-year Geomatic Engineering stu
 ## Tech Stack
 - **Backend**: Django 5.2.10
 - **Frontend**: HTML, CSS (Custom), Bootstrap 4
-- **Database**: SQLite3
+- **Database**: postgresql
 - **Fonts**: Google Fonts (Playfair Display, Inter)
 
 ## Installation
@@ -54,3 +54,4 @@ python manage.py runserver
 
 ---
 © 2026 Vicentia Gallery. All rights reserved.
+
